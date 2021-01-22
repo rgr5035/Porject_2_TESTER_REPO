@@ -11,7 +11,7 @@ const db = require("../models");
       query.ListMemberId =req.query.listmember_id;
     }
 
-    db.GiftItem.findAll({
+    db.GiftItem.findOne({
       where: query,
       include: [db.ListMember],
     }).then((dbGiftItem) => res.render("members", dbGiftItem));

@@ -10,7 +10,11 @@ body {
 }
 
 #top-row-buffer {
-  height: 100px;
+  height: 130px;
+}
+
+#row-bottom-buffer {
+  height: 130px;
 }
 
 .card {
@@ -20,7 +24,7 @@ body {
 }
 
 #card-title {
-  font-family: "Roboto Slab", serif;
+  
   font-size: 50px;
 }
 

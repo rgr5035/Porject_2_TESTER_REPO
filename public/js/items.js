@@ -13,15 +13,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const inputForm = document.getElementById("item-input");
   //   const listSelect = document.getElementById("listMemb");
 
+  // const url = "https:/localhost:8080/items?";
+  // const id = url.indexOf("listmember_id=") !== -1;
+  // console.log(id);
+
+
   // Get query parameter
-  const url = window.location.search;
+  // const url = window.location.search;
   let itemId;
-  //   let listId;
+  let listmemberId;
   let updating = false;
 
   // Get item data for editing/adding
   const getItemData = (id, type) => {
-    const queryUrl = type === "item" ? `/api/items/${id}` : `/api/lists/${id}`;
+    const queryUrl = type === "item" ? `/api/items/${id}` : `/api/members/${id}`;
 
     fetch(queryUrl, {
       method: "GET",
@@ -37,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
           // Populate the form for editing
           nameInput.value = data.item;
           descInput.value = data.desc;
-          listId = data.ListId || data.id;
+          listmemberId = data.ListMemberId || data.id;
 
           // We are updating
           updating = true;
@@ -47,19 +52,20 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // If item exists, grab the content of the item
-  if (url.indexOf("?item_id=") !== -1) {
+  if (url.indexOf("?giftitem_id=") !== -1) {
     itemId = url.split("=")[1];
-    getItemData(itemId, "item");
+    getItemData(itemId, "giftitem");
   }
   // Otherwise if we have a listmember_id in our url, preset the listmember select box to be our list
-  else if (url.indexOf("?list_id=") !== -1) {
+  else if (url.indexOf("?listmember_id=") !== -1) {
     listId = url.split("=")[1];
   }
 
   // Event handler for when the item is submitted
   const handleFormSubmit = (e) => {
+    
     e.preventDefault();
-
+    console.log(id);
     // Make sure the form isn't empty
     // if (
     //   !nameInput.value.trim() ||
@@ -73,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const newItem = {
       item: nameInput.value.trim(),
       desc: descInput.value.trim(),
-      //   ListId: listSelect.value,
+      ListMemberId: 7,
     };
 
     submitItem(newItem);
@@ -91,6 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Submits new item then redirects
   const submitItem = (newItem) => {
+    console.log(newItem);
     fetch("/api/items", {
       method: "POST",
       headers: {

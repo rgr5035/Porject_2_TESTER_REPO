@@ -92,7 +92,7 @@ router.get("/members/:id", (req, res) => {
 
   db.ListMember.findOne({
     where: {
-      id: req.params.id,
+      id: req.params.listmember_id,
     },
     include: [db.GiftItem],
   }).then((dbListMember) => {

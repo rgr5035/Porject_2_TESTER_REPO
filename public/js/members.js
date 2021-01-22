@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
         listmemberId = listmember || '';
 
         if (listmemberId) {
-            listmemberId = `/?id=${listmemberId}`;
+            listmemberId = `/?listmember_id=${listmemberId}`;
         }
 
         fetch (`/api/members${listmemberId}`, {
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const url = window.location.search;
     let listmemberId;
     
-    if (url.indexOf('?id=') !== -1) {
+    if (url.indexOf('?listmember_id=') !== -1) {
         listmemberId = url.split('=')[1];
         getgiftItems();
     } else {
