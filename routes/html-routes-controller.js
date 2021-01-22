@@ -70,6 +70,25 @@ router.delete("/api/delete/:id", (req, res) => {
   });
 });
 
+//DELETE request for gift items 
+router.delete("/api/items/:id", (req, res) => {
+  console.log("deleting");
+  db.GiftItem.destroy({
+    where: {
+      id: req.params.id,
+    },
+  }).then((dbGiftItem) => {
+    // res.json(dbListMember);
+
+    const jsonObject = JSON.parse(JSON.stringify(dbGiftItem));
+
+    const hbsObject = {
+      listmembers: jsonObject,
+    };
+    console.log(jsonObject);
+    res.render("members", hbsObject);
+  });
+});
 
 //GIFT ITEMS PAGE API ROUTES (to display the gift items we've created and to create/delete existing gift items)
 router.get("/items", (req, res) => {
@@ -89,21 +108,21 @@ router.get("/search", (req, res) => {
 //HTML route to generate members.handlebars via browser
 router.get("/members/:id", (req, res) => {
   console.log("got");
-
+  console.log(req.params.id);
   db.ListMember.findOne({
     where: {
-      id: req.params.listmember_id,
+      id: req.params.id,
     },
     include: [db.GiftItem],
   }).then((dbListMember) => {
-    res.json(dbListMember);
+    // res.json(dbListMember);
 
-    const jsonObject = JSON.parse(JSON.stringify(dbListmember));
+    const jsonObject = JSON.parse(JSON.stringify(dbListMember));
 
     const hbsObject = {
-      listmember: jsonObject,
+      listmember: jsonObject.GiftItems,
     };
-    console.log(jsonObject);
+    console.log(hbsObject);
     res.render("members", hbsObject);
   })
 })
